@@ -1,4 +1,4 @@
- <?php 
+<?php 
 	function debugger($data,$is_die=false){
 		echo "<pre>";
 		print_r($data);
@@ -8,9 +8,11 @@
 		}
 	}
 
+
 	function sanitize($str){
 		return trim(stripcslashes(strip_tags($str)));
 	}
+
 
 	function tokenize($length=100){
 		$char = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQESTUVWXYZ0123456789';
@@ -22,8 +24,10 @@
 		return $token;
 	}
 
+
 	function redirect($loc,$key="",$message=""){
 		$_SESSION[$key]=$message;
 		@header('location: '.$loc);
 	}
  ?>
+ 

@@ -1,0 +1,1 @@
+May 22, 2020 04:29:29 pm : (run Query) : SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'admin@admin.com' for key 'email'
