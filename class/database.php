@@ -55,7 +55,7 @@
 					$this->sql.=$this->table;
 					$this->sql.=" SET ";
 				}else{
-					throw new Exception("Data cannot be insert withot table name");
+					throw new Exception("Data cannot be insert without table name");
 				}
 				//table name start
 				if (isset($data) && !empty($data)){
@@ -93,7 +93,7 @@
 						}
 					}
 				}else{
-					throw new Exception("Data cannot be inserted without data");
+					throw new Exception("Data cannot be bind without data");
 				}
 
 				//value bind ends
@@ -227,7 +227,7 @@
 					$this->sql.=$this->table;
 					$this->sql.=" SET ";
 				}else{
-					throw new Exception("Data cannot be insert withot table name");
+					throw new Exception("Data cannot be update without table name");
 				}
 				//table name start
 				if (isset($data) && !empty($data)){
@@ -241,7 +241,7 @@
 						$this->sql.=$data;
 					}
 				}else{
-					throw new Exception("Data cannot be inserted without data");
+					throw new Exception("Data cannot be update without data");
 				}
 
 				if (isset($args['where']) && !empty($args['where'])) {
@@ -288,7 +288,7 @@
 						}
 					}
 				}else{
-					throw new Exception("Data cannot be inserted without data");
+					throw new Exception("Data cannot be bind(update) without data");
 				}
 
 				if (isset($args['where']) && !empty($args['where'])) {
