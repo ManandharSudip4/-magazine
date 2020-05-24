@@ -1,3 +1,7 @@
+<?php
+  include $_SERVER['DOCUMENT_ROOT'].'config/init.php';
+  include 'inc/checklogin.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -7,7 +11,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Gentelella Alela! | </title>
+    <title> Magazine | Login </title>
 
     <!-- Bootstrap -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
@@ -15,32 +19,39 @@
     <link href="assets/css/font-awesome.min.css" rel="stylesheet">
     <!-- NProgress -->
     <link href="assets/nprogress/nprogress.css" rel="stylesheet">
-
     <!-- Custom Theme Style -->
     <link href="assets/css/custom.min.css" rel="stylesheet">
-
         <!-- Animate.css -->
     <link href="assets/css/animate.min.css" rel="stylesheet">
+      <!-- jQuery -->
+    <script src="assets/js/jquery.min.js"></script>
   </head>
 
   <body class="login">
     <div>
       <a class="hiddenanchor" id="signup"></a>
       <a class="hiddenanchor" id="signin"></a>
-
       <div class="login_wrapper">
         <div class="animate form login_form">
           <section class="login_content">
-            <form>
+              
+            <form action="process/login" method="post">
               <h1>Login Form</h1>
               <div>
-                <input type="text" class="form-control" placeholder="Username" required="" />
+                  <?php flashMessage(); ?>
               </div>
               <div>
-                <input type="password" class="form-control" placeholder="Password" required="" />
+                <input type="text" class="form-control" placeholder="email" required="" name="email" />
               </div>
               <div>
-                <a class="btn btn-default submit" href="index.html">Log in</a>
+                <input type="password" class="form-control" placeholder="Password" required="" name="password" />
+              </div>
+              <div>
+                <input type="checkbox" name="rememberme" /> Remember me 
+              </div>
+              <div>
+                <!--   -->
+                <button class="btn btn-default submit" type="Submit">Log in</button>
                 <a class="reset_pass" href="#">Lost your password?</a>
               </div>
 
