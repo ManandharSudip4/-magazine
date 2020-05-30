@@ -1,19 +1,19 @@
 <?php
-	class category extends database{
+	class advertisement extends database{
 		function __construct(){
-			$this->table = 'categories';
+			$this->table = 'advertisements';
 			database::__construct();
 		}
-		public function addCategory($data,$is_die=false){
+		public function addAdvertisement($data,$is_die=false){
 			return $this->addData($data,$is_die);
 		}
 
-		public function getCategorybyId($category_id,$is_die=false){
+		public function getAdvertisementbyId($advertisement_id,$is_die=false){
 			
 			$args = array(
 				'where'	=> array(
 					'and' => array(
-							'id' => $category_id,
+							'id' => $advertisement_id,
 						)
 					)
 				);
@@ -21,7 +21,7 @@
 			return $this->getData($args,$is_die);
 		}
 
-		public function getAllCategory($is_die=false){
+		public function getAllAdvertisement($is_die=false){
 			
 			$args = array(
 				'where'	=> array(
@@ -34,7 +34,7 @@
 			return $this->getData($args,$is_die);
 		}
 
-		public function updateCategorybyId($data,$id,$is_die=false){
+		public function updateAdvertisementbyId($data,$id,$is_die=false){
 			$args = array(
 				'where'	=> array(
 					'and' => array(
@@ -46,7 +46,7 @@
 			return $this->updateData($data,$args,$is_die);
 		}
 
-		public function deleteCategorybyId($id,$is_die=false){
+		public function deleteAdvertisementbyId($id,$is_die=false){
 			$args = array(
 				'where'	=> array(
 					'and' => array(
