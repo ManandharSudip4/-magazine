@@ -4,11 +4,13 @@
 	if (isset($_GET['id']) && !empty($_GET['id'])) {
 		$blog_id = (int)$_GET['id'];
 		if($blog_id){
+
 			$Blog = new blog();
 			$blog_info = $Blog->getBlogbyId($blog_id);
 			if ($blog_info) {
 				$blog_info = $blog_info[0];
-				$bread = $blog_info->blogname ;
+				//debugger($blog_info);
+				$bread = $blog_info->title ;
 				$data = array(
 					'view' => $blog_info->view + 1
 				);
@@ -21,6 +23,7 @@
 		}
 		}else{redirect('index');
 	}
+	$header = $blog_info->category;
 	include 'inc/header.php';
 ?>
 
@@ -47,29 +50,47 @@
 									<figcaption>Caption Here<figcaption>
 								</figure>
 								<blockquote class="blockquote">
-									I’ve heard the argument that “lorem ipsum” is effective in wireframing or design because it helps people focus on the actual layout, or color scheme, or whatever. What kills me here is that we’re talking about creating a user experience that will (whether we like it or not) be DRIVEN by words. The entire structure of the page or app flow is FOR THE WORDS.
+									Summary
 								</blockquote>
 							</div>
+							<?php
+								$Followus = new followus();
+								$follows = $Followus->getAllFollowUs();
+								//debugger($follows);
+							?>
 							<div class="post-shares sticky-shares">
-								<a href="#" class="share-facebook"><i class="fa fa-facebook"></i></a>
-								<a href="#" class="share-twitter"><i class="fa fa-twitter"></i></a>
-								<a href="#" class="share-google-plus"><i class="fa fa-google-plus"></i></a>
-								<a href="#" class="share-pinterest"><i class="fa fa-pinterest"></i></a>
-								<a href="#" class="share-linkedin"><i class="fa fa-linkedin"></i></a>
+								<a href="<?php echo $follows[0]->url ?>" class="share-facebook"><i class="<?php echo $follows[0]->iconname ?>"></i></a>
+								<a href="<?php echo $follows[1]->url ?>" class="share-twitter"><i class="<?php echo $follows[1]->iconname ?>"></i></a>
+								<a href="<?php echo $follows[2]->url ?>" class="share-facebook"><i class="<?php echo $follows[2]->iconname ?>"></i></a>
+								<a href="<?php echo $follows[3]->url ?>" class="share-pinterest"><i class="<?php echo $follows[3]->iconname ?>"></i></a>
+								<a href="<?php echo $follows[4]->url ?>" class="share-google-plus"><i class="<?php echo $follows[4]->iconname ?>"></i></a>
 								<a href="#"><i class="fa fa-envelope"></i></a>
 							</div>
 						</div>
+						<!-- ad -->
+						<?php
+							$ADS = new advertisement();
+							$ads = $ADS->getAdvertisementbyType('wide');
+							//debugger($ads);
+							if (isset($ads[0]->image) && !empty($ads[0]->image) && file_exists(UPLOAD_PATH.'advertisement/'.$ads[0]->image)) {
+													$thumbnail = UPLOAD_URL.'advertisement/'.$ads[0]->image;
+												}else{
+													$thumbnail = UPLOAD_URL.'noimg.png';
+												}
 
-						<!-- ad -->
-						<div class="section-row text-center">
-							<a href="#" style="display: inline-block;margin: auto;">
-								<img class="img-responsive" src="./assets/img/ad-2.jpg" alt="">
+						?>
+						<div class="aside-widget text-center">
+							<a class="post-img" href="<?php echo $ads[0]->url ?>" style="display: inline-block;margin: auto;">
+								<img  class="img-responsive" src="<?php echo $thumbnail ?>" alt="">
 							</a>
+							<div class="post-body">
+									<h3 class="post-title"><a href="<?php echo $ads[0]->url ?>"><?php echo $ads[0]->caption; ?></a></h3>
+							</div>	
 						</div>
-						<!-- ad -->
+						<!-- /ad -->
 						
 						<!-- author -->
-						<div class="section-row">
+						<!-- <div class="section-row">
 							<div class="post-author">
 								<div class="media">
 									<div class="media-left">
@@ -89,7 +110,7 @@
 									</div>
 								</div>
 							</div>
-						</div>
+						</div> -->
 						<!-- /author -->
 
 						<!-- comments -->
@@ -204,10 +225,23 @@
 					<!-- aside -->
 					<div class="col-md-4">
 						<!-- ad -->
+						<?php
+							$ads = $ADS->getAdvertisementbyType('simple');
+							//debugger($ads);
+							if (isset($ads[0]->image) && !empty($ads[0]->image) && file_exists(UPLOAD_PATH.'advertisement/'.$ads[0]->image)) {
+													$thumbnail = UPLOAD_URL.'advertisement/'.$ads[0]->image;
+												}else{
+													$thumbnail = UPLOAD_URL.'noimg.png';
+												}
+
+						?>
 						<div class="aside-widget text-center">
-							<a href="#" style="display: inline-block;margin: auto;">
-								<img class="img-responsive" src="./assets/img/ad-1.jpg" alt="">
+							<a class="post-img" href="<?php echo $ads[0]->url ?>" style="display: inline-block;margin: auto;">
+								<img class="img-responsive" src="<?php echo $thumbnail ?>" alt="">
 							</a>
+							<div class="post-body">
+									<h3 class="post-title"><a href="<?php echo $ads[0]->url ?>"><?php echo $ads[0]->caption; ?></a></h3>
+							</div>
 						</div>
 						<!-- /ad -->
 
@@ -216,34 +250,28 @@
 							<div class="section-title">
 								<h2>Most Read</h2>
 							</div>
+								<?php   $Blog = new blog();
+										$popularBlog = $Blog->getAllPopularBlogByCategoryWithLimit($blog_info->categoryid,0,4);
+										//debugger($popularBlog);
+										if ($popularBlog) {
+											foreach ($popularBlog as $key => $blog) {
+												if (isset($blog->image) && !empty($blog->image) && file_exists(UPLOAD_PATH.'blog/'.$blog->image)) {
+													$thumbnail = UPLOAD_URL.'blog/'.$blog->image;
+												}else{
+													$thumbnail = UPLOAD_URL.'noimg.png';
+												}
+								?>
+													<div class="post post-widget">
+														<a class="post-img" href="blog-post?id=<?php echo $blog->id ;?>"><img src="<?php echo($thumbnail)?>" alt=""></a>
+														<div class="post-body">
+															<h3 class="post-title"><a href="blog-post?id=<?php echo $blog->id ;?>"><?php echo $blog->title ;?></a></h3>
+														</div>
+													</div>
+								<?php
+											}
+										}
+								?>
 
-							<div class="post post-widget">
-								<a class="post-img" href="blog-post.html"><img src="./assets/img/widget-1.jpg" alt=""></a>
-								<div class="post-body">
-									<h3 class="post-title"><a href="blog-post.html">Tell-A-Tool: Guide To Web Design And Development Tools</a></h3>
-								</div>
-							</div>
-
-							<div class="post post-widget">
-								<a class="post-img" href="blog-post.html"><img src="./assets/img/widget-2.jpg" alt=""></a>
-								<div class="post-body">
-									<h3 class="post-title"><a href="blog-post.html">Pagedraw UI Builder Turns Your Website Design Mockup Into Code Automatically</a></h3>
-								</div>
-							</div>
-
-							<div class="post post-widget">
-								<a class="post-img" href="blog-post.html"><img src="./assets/img/widget-3.jpg" alt=""></a>
-								<div class="post-body">
-									<h3 class="post-title"><a href="blog-post.html">Why Node.js Is The Coolest Kid On The Backend Development Block!</a></h3>
-								</div>
-							</div>
-
-							<div class="post post-widget">
-								<a class="post-img" href="blog-post.html"><img src="./assets/img/widget-4.jpg" alt=""></a>
-								<div class="post-body">
-									<h3 class="post-title"><a href="blog-post.html">Tell-A-Tool: Guide To Web Design And Development Tools</a></h3>
-								</div>
-							</div>
 						</div>
 						<!-- /post widget -->
 
@@ -252,27 +280,36 @@
 							<div class="section-title">
 								<h2>Featured Posts</h2>
 							</div>
-							<div class="post post-thumb">
-								<a class="post-img" href="blog-post.html"><img src="./assets/img/post-2.jpg" alt=""></a>
+							<?php
+									$Blog = new blog();
+									$featuredBlog = $Blog->getAllFeaturedBlogWithLimit(0,3);
+									//debugger($featuredBlog);
+									if(isset($featuredBlog) && !empty($featuredBlog)){ 
+										foreach ($featuredBlog as $key => $blog) {
+							?>
+					
+						<div class="post post-thumb">
+							<?php
+								if (isset($blog->image) && !empty($blog->image) && file_exists(UPLOAD_PATH.'blog/'.$blog->image)) {
+									$thumbnail = UPLOAD_URL.'blog/'.$blog->image;
+								}else{
+									$thumbnail = UPLOAD_URL.'noimg.png';
+								}
+							?>
+							<a class="post-img" href="blog-post?id=<?php echo ($blog->id)?>"><img src="<?php echo $thumbnail?>" alt="" ></a>
 								<div class="post-body">
 									<div class="post-meta">
-										<a class="post-category cat-3" href="#">Jquery</a>
-										<span class="post-date">March 27, 2018</span>
+										<a class="post-category <?php echo CAT_COLOR[$blog->categoryid%4] ?>" href="category?id=<?php echo $blog->categoryid ?>"><?php echo $blog->category; ?></a>
+										<span class="post-date"><?php echo date('M d Y',strtotime($blog->created_date)); ?></span>
 									</div>
-									<h3 class="post-title"><a href="blog-post.html">Ask HN: Does Anybody Still Use JQuery?</a></h3>
+									<h3 class="post-title "><a href="blog-post?id=<?php echo ($blog->id)?>"><?php echo $blog->title;?></a></h3>
 								</div>
-							</div>
-
-							<div class="post post-thumb">
-								<a class="post-img" href="blog-post.html"><img src="./assets/img/post-1.jpg" alt=""></a>
-								<div class="post-body">
-									<div class="post-meta">
-										<a class="post-category cat-2" href="#">JavaScript</a>
-										<span class="post-date">March 27, 2018</span>
-									</div>
-									<h3 class="post-title"><a href="blog-post.html">Chrome Extension Protects Against JavaScript-Based CPU Side-Channel Attacks</a></h3>
-								</div>
-							</div>
+						</div>
+					
+				<?php
+						}
+					}
+				?>
 						</div>
 						<!-- /post widget -->
 						
@@ -318,7 +355,6 @@
 											}
 										}
 									?>
-									<li><a href="#">Add</a></li>
 								</ul>
 							</div>
 						</div>
@@ -331,9 +367,16 @@
 							</div>
 							<div class="archive-widget">
 								<ul>
-									<li><a href="#">January 2018</a></li>
-									<li><a href="#">Febuary 2018</a></li>
-									<li><a href="#">March 2018</a></li>
+									<?php 
+										$Archive = new archive();
+										$archives = $Archive->getAllArchive();
+										//debugger($archives);
+										foreach ($archives as $key => $archive) {
+									?>
+									<li><a href="archive?id=<?php echo $archive->id ;?>"><?php echo date("M d, Y",(strtotime($archive->date))) ?></a></li>
+									<?php
+										}
+									?>
 								</ul>
 							</div>
 						</div>

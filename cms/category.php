@@ -67,9 +67,9 @@ $header = "Category";
                               <a href="process/category?id=<?php echo($category->id)?>&amp;act=<?php echo substr(md5("Delete-Category-".$category->id.$_SESSION['token']), 3,15) ?>" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this category?');">
                                 <i class="fa fa-trash"></i>
                               </a>
-                              <a href="javascript:;" class="btn btn-default" onclick="editHistory()">
+                              <!-- <a href="javascript:;" class="btn btn-default" onclick="editHistory()">
                                 <i class="fa fa-history" id="his"></i>
-                              </a>
+                              </a> -->
                             </td>
                           </tr>           
                           <?php
@@ -88,7 +88,7 @@ $header = "Category";
                               </button>
                               <h4 class="modal-title" id="title">Add Category</h4>
                             </div>
-                            <form action="process/category.php" method="post" id="formy">
+                            <form action="process/category.php" method="post" >
                               <div class="modal-body">
                                 <div class="form-group" id="#ed">
                                     <label for="">Category Name</label>
@@ -105,32 +105,7 @@ $header = "Category";
                                 <button type="sumbit" class="btn btn-primary">Save changes</button>
                               </div>                
                             </form>
-                            <table id="datable" class="table table-striped table-bordered" style="text-align: center">
-                              <thead >
-                                <th style="text-align: center">S.N</th>
-                                <th style="text-align: center">Category Name</th>
-                                <th style="text-align: center">Description</th>
-                                <th style="text-align: center">Date</th>
-                              </thead>
-                              <tbody>
-                                <?php $Categor = new category();
-                                $categories = $Categor->getAllCategory();
-                                // debugger($categories);
-                                if ($categories) {
-                                  foreach ($categories as $key => $category) {
-                                ?>
-                                <tr>
-                                  <td><?php echo $key+1; ?></td>
-                                  <td><?php echo $category->categoryname;?></td>
-                                  <td><?php echo html_entity_decode($category->description);?></td>
-                                  <td><?php echo $category->updated_date; ?></td>
-                                </tr>           
-                                <?php
-                                  }
-                                }
-                                ?>
-                              </tbody>
-                            </table>
+                            
         
                         </div><!-- /.modal-content -->
                         </div><!-- /.modal-dialog -->
@@ -155,42 +130,39 @@ $header = "Category";
     $('#title').html('Add Category');
     $('#categoryname').val("");
     $('#id').removeAttr('value');
-    document.getElementById('formy').style.display='block';
-    document.getElementById('datable').style.display='none';
+    // document.getElementById('formy').style.display='block';
+    // document.getElementById('datable').style.display='none';
     showModal();
   }
 
   function editCategory(element){
-    var category_info = $(element).data('category_info');
+    var category_info = $(element).data("category_info");
 
-    if (typeof(category_info) != 'object'){
+    if (typeof(category_info) != "object"){
       category_info = JSON.parse(category_info);
     }
-    // console.log(category_info);
+     console.log(category_info);
 
     $('#title').html('Edit Category');
     $('#categoryname').val(category_info.categoryname);
-    $('#id').val(category_info.id)
-    document.getElementById('formy').style.display='block';
-    document.getElementById('datable').style.display='none';
-    showModal(category_info.description);  
+    $('#id').val(category_info.id);
+    // document.getElementById('formy').style.display='block';
+    // document.getElementById('datable').style.display='none';
+    showModal(category_info.description);
+    // showModal();  
   }
 
-  function editHistory(){
-    $('#title').html('Edit History');
-    document.getElementById('formy').style.display='none';
-    document.getElementById('datable').style.display='block';
-    showModal();
-  }
+  // function editHistory(){
+  //   $('#title').html('Edit History');
+  //   document.getElementById('formy').style.display='none';
+  //   document.getElementById('datable').style.display='block';
+  //   showModal();
+  // }
 
 
   function showModal(data=""){
     ckeditor(data);
     $('.modal').modal();
-  }
-
-  function showModal2(){
-    $()
   }
 
   function ckeditor(data=""){

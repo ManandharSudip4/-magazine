@@ -2,8 +2,7 @@
 	include $_SERVER['DOCUMENT_ROOT'].'config/init.php';
 	
 	$Category = new category();
-	$Categor = new category();
-	 debugger($_POST);
+	 //debugger($_POST);
 	if($_POST){
 		$data = array(
 			'categoryname' => sanitize($_POST['categoryname']),
@@ -25,7 +24,6 @@
 		$category_info = $Category->getCategorybyId($category_id);
 		if ($category_info) {
 			if ($_SESSION['user_id'] == $category_info[0]->added_by) {
-				$Categor->addCategory($data);
 				$success = $Category->updateCategorybyId($data,$category_id);
 			}else{
 				redirect('../category','error','You are not allowed to edit.');

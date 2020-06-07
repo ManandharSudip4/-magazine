@@ -37,7 +37,9 @@
 
 	if ($blog_id) {
 		$blog_info = $Blog->getBlogbyId($blog_id);
+		//debugger($blog_info);
 		if ($blog_info) {
+				//debugger($_SESSION['user_id'],true);
 			if ($_SESSION['user_id'] == $blog_info[0]->added_by) {
 				// $Blog>addBlog($data);
 				$success = $Blog->updateBlogbyId($data,$blog_id);

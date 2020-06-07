@@ -1,22 +1,21 @@
 <!-- Footer -->
 		<footer id="footer">
 			<!-- container -->
+			
 			<div class="container">
 				<!-- row -->
 				<div class="row">
 					<div class="col-md-5">
 						<div class="footer-widget">
 							<div class="footer-logo">
-								<a href="index.html" class="logo"><img src="./assets/img/logo.png" alt=""></a>
+								<a href="index" class="logo" style="width:70px"><img src="./assets/img/wlogo.png" alt=""></a>
 							</div>
 							<ul class="footer-nav">
 								<li><a href="#">Privacy Policy</a></li>
 								<li><a href="#">Advertisement</a></li>
 							</ul>
 							<div class="footer-copyright">
-								<span>&copy; <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></span>
+								<span>&copy; <script>document.write(new Date().getFullYear());</script>. All rights reserved. </span>
 							</div>
 						</div>
 					</div>
@@ -27,9 +26,9 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 								<div class="footer-widget">
 									<h3 class="footer-title">About Us</h3>
 									<ul class="footer-links">
-										<li><a href="about.html">About Us</a></li>
-										<li><a href="#">Join Us</a></li>
-										<li><a href="contact.html">Contacts</a></li>
+										<li><a href="about">About Us</a></li>
+										<!-- <li><a href="blank">Join Us</a></li> -->
+										<li><a href="contact">Contacts</a></li>
 									</ul>
 								</div>
 							</div>
@@ -37,10 +36,16 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 								<div class="footer-widget">
 									<h3 class="footer-title">Catagories</h3>
 									<ul class="footer-links">
-										<li><a href="category.html">Web Design</a></li>
-										<li><a href="category.html">JavaScript</a></li>
-										<li><a href="category.html">Css</a></li>
-										<li><a href="category.html">Jquery</a></li>
+										<?php 
+											$Category = new category();
+											$categories = $Category->getAllCategory();
+											//debugger($categories);
+											foreach ($categories as $key => $category) {
+										?>
+										<li><a href="category?id=<?php echo $category->id ?>"><?php echo $category->categoryname; ?></a></li>
+										<?php
+											}
+										?>
 									</ul>
 								</div>
 							</div>
@@ -56,12 +61,17 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 									<button class="newsletter-btn"><i class="fa fa-paper-plane"></i></button>
 								</form>
 							</div>
-							<ul class="footer-social">
-								<li><a href="#"><i class="fa fa-facebook"></i></a></li>
-								<li><a href="#"><i class="fa fa-twitter"></i></a></li>
-								<li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-								<li><a href="#"><i class="fa fa-pinterest"></i></a></li>
-							</ul>
+									<?php
+									//debugger($followuss);
+										if ($followuss) {
+											foreach ($followuss as $key => $followus) {
+									?>				
+										<a href="<?php echo $followus->url ?>"><i class="<?php echo $followus->iconname ?>" style="width: 20px"></i></a>
+									<?php			
+											}
+										}
+									?>
+								
 						</div>
 					</div>
 
@@ -76,6 +86,12 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 		<script src="assets/js/jquery.min.js"></script>
 		<script src="assets/js/bootstrap.min.js"></script>
 		<script src="assets/js/main.js"></script>
+		<script type="text/javascript">
+			$('#load').click(function(){	
+				$('#loadedcontent').removeClass('hidden');
+				$('#load').removeClass('primary-button').removeClass('center-block').addClass('hidden');
+			});
+		</script>
 
 	</body>
 </html>

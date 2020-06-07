@@ -1,4 +1,6 @@
+
 <?php
+
 		define('BREADCRUMBS',['contact','category','about','blank']);
 		define('CAT_COLOR', ['cat-1','cat-2','cat-3','cat-4']);
 ?>
@@ -11,7 +13,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-		<title>WebMag | <?php echo (isset($header) && !empty($header))?$header:''; ?></title>
+		<title><?php echo (isset($header) && !empty($header))?$header:''; ?> | WebMag</title>
 
 		<!-- Google font -->
 		<link href="https://fonts.googleapis.com/css?family=Nunito+Sans:700%7CNunito:300,600" rel="stylesheet"> 
@@ -31,7 +33,23 @@
 		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
-
+		<style>
+			html{
+				     scroll-behavior: smooth;
+				}
+			#gototop{
+				     position: fixed;
+				     width: 50px;
+				     height: 50px;
+				     background: transparent;
+				     bottom: 40px;
+				     right: 50px;
+				     text-decoration: none;
+				     text-align: center;
+				     line-height: 50px;
+				     font-size: 22px;
+				}
+		</style>
     </head>
 	<body>
 		
@@ -44,7 +62,7 @@
 					<div class="container">
 						<!-- logo -->
 						<div class="nav-logo">
-							<a href="index" class="logo " ><img src="./assets/img/logo.png" alt=""></a>
+							<a href="index" class="logo" style=" margin: 0 10 0 0"><img src="./assets/img/wlogo.png" alt=""></a>
 						</div>
 						<!-- /logo -->
 
@@ -68,7 +86,7 @@
 						<!-- search & aside toggle -->
 						<div class="nav-btns">
 							<button class="aside-btn"><i class="fa fa-bars"></i></button>
-							<button class="search-btn"><i class="fa fa-search"></i></button>
+							<!-- <button class="search-btn"><i class="fa fa-search"></i></button> -->
 							<div class="search-form">
 								<input class="search-input" type="text" name="search" placeholder="Enter Your Search ...">
 								<button class="search-close"><i class="fa fa-times"></i></button>
@@ -85,9 +103,26 @@
 					<div class="section-row">
 						<ul class="nav-aside-menu">
 							<li><a href="index">Home</a></li>
+							<li>
+								<div class="dropdown">
+								    <a class="dropdown-toggle"  data-toggle="dropdown">Leagues
+								    <span class="caret"></span></a>
+								    <ul class="dropdown-menu">
+								      <?php
+										if($categories){
+											foreach ($categories as $key => $category) {
+										?>
+												<li><a href="category?id=<?php echo $category->id ?>" style=" font-size: 15px"><?php echo $category->categoryname?></a></li>
+										<?php	
+											}
+										}
+										?>
+								    </ul>
+						  		</div>
+							</li>
+							<!-- <li><a class="dropdown-btn">Leagues<i class="fa fa-caret-down"></i></a></li> --> 
 							<li><a href="about">About Us</a></li>
-							<li><a href="blank">Join Us</a></li>
-							<li><a href="blank">Advertisement</a></li>
+							<!-- <li><a href="blank">Join Us</a></li> -->
 							<li><a href="contact">Contacts</a></li>
 						</ul>
 					</div>
@@ -96,38 +131,49 @@
 					<!-- widget posts -->
 					<div class="section-row">
 						<h3>Recent Posts</h3>
-						<div class="post post-widget">
-							<a class="post-img" href="blog-post"><img src="./assets/img/widget-2.jpg" alt=""></a>
-							<div class="post-body">
-								<h3 class="post-title"><a href="blog-post">Pagedraw UI Builder Turns Your Website Design Mockup Into Code Automatically</a></h3>
+						<!-- recent -->
+						<?php
+							$Blog=new blog();
+							$recentBlog = $Blog->getAllRecentBlogWithLimit(0,4);
+							//debugger($recentBlog);
+							if ($recentBlog) {
+								foreach ($recentBlog as $key => $blog) {
+									if (isset($blog->image) && !empty($blog->image) && file_exists(UPLOAD_PATH.'blog/'.$blog->image)) {
+										$thumbnail = UPLOAD_URL.'blog/'.$blog->image;
+									}else{
+										$thumbnail = UPLOAD_URL.'noimg.png';
+									}
+						?>
+						<div>
+							<div class="post post-widget">
+								<a class="post-img" href="blog-post?id=<?php echo $blog->id ;?>"><img src="<?php echo ($thumbnail) ?>" alt="" ></a>
+								<div class="post-body">
+									<h5 ><a href="blog-post?id=<?php echo $blog->id ;?>"><?php echo $blog->title;?></a></h5>
+								</div>
 							</div>
 						</div>
-
-						<div class="post post-widget">
-							<a class="post-img" href="blog-post"><img src="./assets/img/widget-3.jpg" alt=""></a>
-							<div class="post-body">
-								<h3 class="post-title"><a href="blog-post">Why Node.js Is The Coolest Kid On The Backend Development Block!</a></h3>
-							</div>
-						</div>
-
-						<div class="post post-widget">
-							<a class="post-img" href="blog-post"><img src="./assets/img/widget-4.jpg" alt=""></a>
-							<div class="post-body">
-								<h3 class="post-title"><a href="blog-post">Tell-A-Tool: Guide To Web Design And Development Tools</a></h3>
-							</div>
-						</div>
+						<?php
+								}
+							}
+						?>
 					</div>
 					<!-- /widget posts -->
 
 					<!-- social links -->
 					<div class="section-row">
 						<h3>Follow us</h3>
-						<ul class="nav-aside-social">
-							<li><a href="#"><i class="fa fa-facebook"></i></a></li>
-							<li><a href="#"><i class="fa fa-twitter"></i></a></li>
-							<li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-							<li><a href="#"><i class="fa fa-pinterest"></i></a></li>
-						</ul>
+						<?php
+						$Followus = new followus();
+						$followuss = $Followus->getAllFollowUs();
+						//debugger($followuss);
+							if ($followuss) {
+								foreach ($followuss as $key => $followus) {
+						?>				
+							<a href="<?php echo $followus->url ?>"><i class="<?php echo $followus->iconname ?>" style="width: 20px"></i></a>
+						<?php			
+								}
+							}
+						?>
 					</div>
 					<!-- /social links -->
 
@@ -187,6 +233,7 @@
 			<?php
 				}	
 			?>
+			<a id="gototop"  href="#"><i class="fa fa-arrow-up"></i></a>
 		</header>
 		<!-- /Header -->
 

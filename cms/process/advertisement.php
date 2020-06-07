@@ -7,6 +7,7 @@
 	if($_POST){
 		$data = array(
 			'url' => $_POST['url'],
+			'caption' => htmlentities($_POST['caption']),
 			'type' => $_POST['type'],
 			'status' =>	'Active',
 			'added_by' => $_SESSION['user_id']

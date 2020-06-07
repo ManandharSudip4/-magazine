@@ -62,6 +62,7 @@
 					(
 						id int not null AUTO_INCREMENT PRIMARY KEY,
 						url varchar(250),
+						caption text,
 						type enum('Simple','Wide') default 'Simple',
 						status enum('Active','Passive') default 'Passive',
 						image varchar(50),
@@ -74,7 +75,7 @@
 				CREATE TABLE IF NOT EXISTS followuss
 					(
 						id int not null AUTO_INCREMENT PRIMARY KEY,
-						iconname varchar(20),
+						iconname varchar(50),
 						url text,
 						status enum('Active','Passive') default 'Passive',
 						added_by int,
@@ -94,6 +95,31 @@
 						commentid int,
 						blogid int,
 						state enum('waiting','accept','reject') default 'waiting',
+						status enum('Active','Passive') default 'Active',
+						added_by int,
+						created_date datetime default current_timestamp,
+						updated_date datetime on update current_timestamp
+					)
+			",
+			'archive'=>"
+				CREATE TABLE IF NOT EXISTS archives
+					(
+						id int not null AUTO_INCREMENT PRIMARY KEY,
+						date varchar(20),
+						status enum('Active','Passive') default 'Active',
+						added_by int,
+						created_date datetime default current_timestamp,
+						updated_date datetime on update current_timestamp
+					)
+			",
+			'contact'=>"
+				CREATE TABLE IF NOT EXISTS contacts
+					(
+						id int not null AUTO_INCREMENT PRIMARY KEY,
+						email varchar(100),
+						message text,
+						contactid int,
+						state enum('unseen','seen','deleted') default 'unseen',
 						status enum('Active','Passive') default 'Active',
 						added_by int,
 						created_date datetime default current_timestamp,

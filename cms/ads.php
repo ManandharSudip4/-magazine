@@ -35,6 +35,7 @@ $header = "Advertisement";
                   <thead >
                     <th style="text-align: center">S.N</th>
                     <th style="text-align: center">URL</th>
+                    <th style="text-align: center">Caption</th>
                     <th style="text-align: center">Type</th>
                     <th style="text-align: center">Image</th>
                     <th style="text-align: center">Action</th>
@@ -42,13 +43,14 @@ $header = "Advertisement";
                   <tbody>
                     <?php $Advertisement = new advertisement();
                     $advertisements = $Advertisement->getAllAdvertisement();
-                      // debugger($advertisements,true);
+                     //debugger($advertisements);
                     if ($advertisements) {
                       foreach ($advertisements as $key => $advertisement) {
                     ?>
                     <tr>
                       <td><?php echo $key+1; ?></td>
                       <td><a href="<?php echo $advertisement->url;?>"><?php echo $advertisement->url;?></a></td>
+                      <td><?php echo html_entity_decode($advertisement->caption);?></td>
                       <td><?php echo $advertisement->type;?></td>
                       <?php
                           if(isset($advertisement->image) && !empty($advertisement->image) && file_exists(UPLOAD_PATH."advertisement/".$advertisement->image)){
@@ -89,6 +91,10 @@ $header = "Advertisement";
                           <div class="form-group">
                               <label for="">URL</label>
                               <input type="text" class="form-control" name="url" id="url" placeholder="url" required="" >
+                          </div>
+                          <div class="form-group">
+                              <label for="">Caption</label>
+                              <textarea class="form-control" name="caption" id="caption"  required="" cols="30" rows="10"></textarea>
                           </div>
                           <div class="form-group" id=abc>
                             <label for="">Type</label><br>
@@ -135,6 +141,7 @@ $header = "Advertisement";
     $('#ed').addClass('form-group');
     $('#title').html('Add Advertisement');
     $('#url').val("");
+    $('#caption').val("");
     $('#id').removeAttr('value');
     $('#type1').removeAttr('checked');
     $('#type2').removeAttr('checked');
@@ -154,6 +161,7 @@ $header = "Advertisement";
     // console.log(advertisement_info);
     $('#title').html('Edit Advertisement');
     $('#url').val(advertisement_info.url);
+    $('#caption').val(advertisement_info.caption);
     $('#id').val(advertisement_info.id);
     if (advertisement_info.type=="Simple") {
       $('#type1').prop("checked",true);
@@ -172,11 +180,12 @@ $header = "Advertisement";
     showModal();  
   }
   
-
-
   function showModal(data=""){
+   
     $('.modal').modal();
   }
+
+ 
 
   //for the thumbnail
   document.getElementById("image").onchange = function () {

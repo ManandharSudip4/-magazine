@@ -29,7 +29,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index" class="site_title"><i class="fa fa-paw"></i> <span>Gentelella Alela!</span></a>
+              <a href="index" class="site_title"><i class="fa fa-soccer-ball-o"></i> <span>Foot Web</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -37,11 +37,11 @@
             <!-- menu profile quick info -->
             <div class="profile clearfix">
               <div class="profile_pic">
-                <img src="assets/images/img.jpg" alt="..." class="img-circle profile_img">
+                <img src="assets/images/user.png" alt="..." class="img-circle profile_img">
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
-                <h2>John Doe</h2>
+                <h2>Admin</h2>
               </div>
               <div class="clearfix"></div>
             </div>
@@ -66,7 +66,7 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="assets/images/img.jpg" alt="">John Doe
+                    <img src="assets/images/user.png" alt="">Admin
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -84,61 +84,42 @@
 
                 <li role="presentation" class="dropdown">
                   <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
-                    <i class="fa fa-envelope-o"></i>
-                    <span class="badge bg-green">6</span>
+                    <i class="fa fa-envelope-o"></i>    
+                        <span class="badge bg-green">
+                          <?php
+                            $Comment = new comment();
+                            $Count = $Comment->getNumberWaitingComments();
+                            //debugger($Count);
+                             echo $Count[0]->total;
+                          ?>
+                        </span>
                   </a>
                   <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+                    <?php                       
+                          $comments = $Comment->getAllWaitingCommentForNotifications(0,5);
+                           //debugger($comments);
+                           if ($comments){
+                              foreach ($comments as $key => $comment) {
+                    ?>
                     <li>
-                      <a>
-                        <span class="image"><img src="assets/images/img.jpg" alt="Profile Image" /></span>
+                      <a href="comment">
+                        <span class="image"><img src="assets/images/user.png" alt="Profile Image" /></span>
                         <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
+                          <span><?php echo $comment->name?></span>
+                          <span class="time"><?php echo $comment->created_date ?></span>
                         </span>
                         <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
+                          <?php echo substr($comment->message, 0,20)."..." ?>
                         </span>
                       </a>
                     </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src="assets/images/img.jpg" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src="assets/images/img.jpg" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src="assets/images/img.jpg" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
+                    <?php
+                              }
+                           }
+                          ?>
                     <li>
                       <div class="text-center">
-                        <a>
+                        <a href="comment">
                           <strong>See All Alerts</strong>
                           <i class="fa fa-angle-right"></i>
                         </a>

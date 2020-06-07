@@ -66,8 +66,7 @@ $header = "Blog";
                             <td><?php echo html_entity_decode($blog->content);?></td>
                             <td><?php echo $blog->featured;?></td>
                             <td><?php echo $blog->category;?></td>
-                            <td><?php echo (isset($blog->view) && !empty($blog->view))?  6ybhuimko,lp.;[/']|
-                            $blog->view:"0";?></td>
+                            <td><?php echo (isset($blog->view) && !empty($blog->view))?$blog->view:"0";?></td>
                             <?php
                                 if(isset($blog->image) && !empty($blog->image) && file_exists(UPLOAD_PATH."blog/".$blog->image)){
                                   $thumbnail = UPLOAD_URL.'blog/'.$blog->image;

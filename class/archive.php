@@ -1,19 +1,20 @@
+
 <?php
-	class advertisement extends database{
+	class archive extends database{
 		function __construct(){
-			$this->table = 'advertisements';
+			$this->table = 'archives';
 			database::__construct();
 		}
-		public function addAdvertisement($data,$is_die=false){
+		public function addArchive($data,$is_die=false){
 			return $this->addData($data,$is_die);
 		}
 
-		public function getAdvertisementbyId($advertisement_id,$is_die=false){
+		public function getArchivebyId($archive_id,$is_die=false){
 			
 			$args = array(
 				'where'	=> array(
 					'and' => array(
-							'id' => $advertisement_id,
+							'id' => $archive_id,
 						)
 					)
 				);
@@ -21,33 +22,22 @@
 			return $this->getData($args,$is_die);
 		}
 
-		public function getAdvertisementbyType($advertisement_type,$is_die=false){
-			
-			$args = array(
-				'where'	=> array(
-					'and' => array(
-							'type' => $advertisement_type,
-						)
-					)
-				);
-
-			return $this->getData($args,$is_die);
-		}
-
-		public function getAllAdvertisement($is_die=false){
+		public function getAllArchive($is_die=false){
 			
 			$args = array(
 				'where'	=> array(
 					'and' => array(
 							'status' => 'Active',
+
 						)
-					)
+					),
+				'order' => 'ASC'
 				);
 
 			return $this->getData($args,$is_die);
 		}
 
-		public function updateAdvertisementbyId($data,$id,$is_die=false){
+		public function updateArchivebyId($data,$id,$is_die=false){
 			$args = array(
 				'where'	=> array(
 					'and' => array(
@@ -59,7 +49,7 @@
 			return $this->updateData($data,$args,$is_die);
 		}
 
-		public function deleteAdvertisementbyId($id,$is_die=false){
+		public function deleteArchivebyId($id,$is_die=false){
 			$args = array(
 				'where'	=> array(
 					'and' => array(

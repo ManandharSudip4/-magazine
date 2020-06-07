@@ -5,6 +5,7 @@
 		if($cat_id){
 			$Category = new category();
 			$category_info = $Category->getCategorybyId($cat_id);
+			//debugger($category_info);
 			if ($category_info) {
 				$category_info = $category_info[0];
 				$bread = $category_info->categoryname ;
@@ -16,7 +17,7 @@
 		}
 		}else{redirect('index');
 	}
-
+	$header = $category_info->categoryname;
 	include 'inc/header.php';
 ?>
 		
@@ -111,18 +112,30 @@
 							<div class="clearfix visible-md visible-lg"></div>
 							
 							<!-- ad -->
-							<div class="col-md-12">
-								<div class="section-row">
-									<a href="#">
-										<img class="img-responsive center-block" src="./assets/img/ad-2.jpg" alt="">
-									</a>
-								</div>
-							</div>
-							<!-- ad -->
-							<!-- recent -->
+						<?php
+							$ADS = new advertisement();
+							$ads = $ADS->getAdvertisementbyType('wide');
+							//debugger($ads);
+							if (isset($ads[0]->image) && !empty($ads[0]->image) && file_exists(UPLOAD_PATH.'advertisement/'.$ads[0]->image)) {
+													$thumbnail = UPLOAD_URL.'advertisement/'.$ads[0]->image;
+												}else{
+													$thumbnail = UPLOAD_URL.'noimg.png';
+												}
 
+						?>
+						<div class="aside-widget text-center">
+							<a class="post-img" href="<?php echo $ads[0]->url ?>" style="display: inline-block;margin: auto;">
+								<img  class="img-responsive" src="<?php echo $thumbnail ?>" alt="">
+							</a>
+							<div class="post-body">
+									<h3 class="post-title"><a href="<?php echo $ads[0]->url ?>"><?php echo $ads[0]->caption; ?></a></h3>
+							</div>	
+						</div>
+						<!-- /ad -->
+							<!-- recent -->
 							<?php
-								$recentBlog = $Blog->getAllRecentBlogByCategoryWithLimit($cat_id,0,4);
+								$recentBlog = $Blog->getAllRecentBlogByCategoryWithLimit($cat_id,0,$n=4);
+								//debugger($recentBlog);
 								if ($recentBlog) {
 									foreach ($recentBlog as $key => $blog) {
 										
@@ -152,13 +165,14 @@
 									}
 								}
 							?>
+
 							<!-- post -->
 							<!-- /post -->
 							
 							
 							<div class="col-md-12">
 								<div class="section-row">
-									<button class="primary-button center-block">Load More</button>
+									<button class="primary-button center-block" id="load"><a href="#loadedcontent" style="color: white" >Load More</a></button>
 								</div>
 							</div>
 						</div>
@@ -166,10 +180,23 @@
 					
 					<div class="col-md-4">
 						<!-- ad -->
+						<?php
+							$ads = $ADS->getAdvertisementbyType('simple');
+							//debugger($ads);
+							if (isset($ads[0]->image) && !empty($ads[0]->image) && file_exists(UPLOAD_PATH.'advertisement/'.$ads[0]->image)) {
+													$thumbnail = UPLOAD_URL.'advertisement/'.$ads[0]->image;
+												}else{
+													$thumbnail = UPLOAD_URL.'noimg.png';
+												}
+
+						?>
 						<div class="aside-widget text-center">
-							<a href="#" style="display: inline-block;margin: auto;">
-								<img class="img-responsive" src="./assets/img/ad-1.jpg" alt="">
+							<a class="post-img" href="<?php echo $ads[0]->url ?>" style="display: inline-block;margin: auto;">
+								<img class="img-responsive" src="<?php echo $thumbnail ?>" alt="">
 							</a>
+							<div class="post-body">
+									<h3 class="post-title"><a href="<?php echo $ads[0]->url ?>"><?php echo $ads[0]->caption; ?></a></h3>
+							</div>
 						</div>
 						<!-- /ad -->
 						
@@ -244,7 +271,6 @@
 											}
 										}
 									?>
-									<li><a href="#">Add</a></li>
 								</ul>
 							</div>
 						</div>
@@ -257,9 +283,16 @@
 							</div>
 							<div class="archive-widget">
 								<ul>
-									<li><a href="#">Jan 2018</a></li>
-									<li><a href="#">Feb 2018</a></li>
-									<li><a href="#">Mar 2018</a></li>
+									<?php 
+										$Archive = new archive();
+										$archives = $Archive->getAllArchive();
+										//debugger($archives);
+										foreach ($archives as $key => $archive) {
+									?>
+									<li><a href="archive?id=<?php echo $archive->id ;?>"><?php echo date("M d, Y",(strtotime($archive->date))) ?></a></li>
+									<?php
+										}
+									?>
 								</ul>
 							</div>
 						</div>
