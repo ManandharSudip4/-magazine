@@ -56,9 +56,9 @@
 						<div class="footer-widget">
 							<h3 class="footer-title">Join our Newsletter</h3>
 							<div class="footer-newsletter">
-								<form>
-									<input class="input" type="email" name="newsletter" placeholder="Enter your email">
-									<button class="newsletter-btn"><i class="fa fa-paper-plane"></i></button>
+								<form method="post" action="process/subscriber">
+									<input class="input" type="email" name="email" placeholder="Enter your email">
+									<button class="newsletter-btn" type="submit"><i class="fa fa-paper-plane"></i></button>
 								</form>
 							</div>
 									<?php
@@ -89,9 +89,24 @@
 		<script type="text/javascript">
 			$('#load').click(function(){	
 				$('#loadedcontent').removeClass('hidden');
-				$('#load').removeClass('primary-button').removeClass('center-block').addClass('hidden');
+				// $('#load').removeClass('primary-button').removeClass('center-block').addClass('hidden');
 			});
 		</script>
+		<!-- <script type="text/javascript">
+			$('#loads').click(function(){	
+				$('#loadedblog').removeClass('hidden');
+				$('#loads').removeClass('primary-button').removeClass('center-block').addClass('hidden');
+			});
+		</script> -->
+		<!-- <script type="text/javascript">
+					// Search Nav
+			$('.search-btn').on('click', function () {
+				$('.search-form').addClass('active');
+			});
 
+			$('.search-close').on('click', function () {
+				$('.search-form').removeClass('active');
+			});
+		</script> -->
 	</body>
 </html>

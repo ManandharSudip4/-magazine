@@ -86,11 +86,12 @@
 						<!-- search & aside toggle -->
 						<div class="nav-btns">
 							<button class="aside-btn"><i class="fa fa-bars"></i></button>
-							<!-- <button class="search-btn"><i class="fa fa-search"></i></button> -->
-							<div class="search-form">
+							<button class="search-btn"><i class="fa fa-search"></i></button>
+							<form class="search-form" method="post" action="search">
 								<input class="search-input" type="text" name="search" placeholder="Enter Your Search ...">
-								<button class="search-close"><i class="fa fa-times"></i></button>
-							</div>
+								<button class="btn btn-primary" type="submit" style="height: 70px; width:70px"><i class="fa fa-search"></i></button>
+								<a class="btn btn-primary" id="search-close" style="height: 70px; width:70px; text-align: center; line-height: 50px;">Close</a>
+							</form>
 						</div>
 						<!-- /search & aside toggle -->
 					</div>

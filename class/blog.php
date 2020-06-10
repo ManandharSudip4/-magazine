@@ -50,6 +50,41 @@
 
 			return $this->getData($args,$is_die);
 		}
+		public function getBlogCountbySearch($search,$is_die=false){
+			
+			$args = array(
+				'fields'=>	['COUNT(id) as total'],
+				'where' => " where content LIKE '%".$search."%'",
+
+				);
+
+			return $this->getData($args,$is_die);
+		}
+
+		public function getBlogbySearch($search,$offset,$no_of_data,$is_die=false){
+			
+			$args = array(
+				'fields'=>	['id',
+				            'title',
+				            'content',
+				            'featured',
+				            'categoryid',
+				            '(SELECT categoryname from categories where id = categoryid) as category',
+				            'view',
+				            'image',
+				            'added_by',
+				        	'created_date'],
+				'where' => " where content LIKE '%".$search."%'",
+				'order' => 'DESC',
+				'limit' => array(
+								'offset' => $offset,				//take data leaving some no.
+								'no_of_data' => $no_of_data
+								)
+				);
+
+			return $this->getData($args,$is_die);
+		}
+
 
 		public function getAllBlog($is_die=false){
 			

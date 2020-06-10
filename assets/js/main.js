@@ -20,7 +20,7 @@
 		$('.search-form').addClass('active');
 	});
 
-	$('.search-close').on('click', function () {
+	$('#search-close').on('click', function () {
 		$('.search-form').removeClass('active');
 	});
 

@@ -352,14 +352,15 @@ RESPONSIVE
      visibility: visible;
 }
  .nav-btns .search-form .search-input {
-     height: 100%;
-     width: 100%;
-     border: none;
+     height: 70px;
+     width: 70%;
+     border: solid black;
      background: #FFF;
      padding: 0px;
      font-weight: 600;
 }
- .nav-btns .search-form .search-close {
+ .nav-btns .search-form{
+     height: 70px;
      position: absolute;
      top: 50%;
      right: 15px;

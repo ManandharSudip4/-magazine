@@ -175,7 +175,6 @@
 					exit();
 				}
 				$this->stmt = $this->conn->prepare($this->sql);
-
 				//value bind
 
 				if (isset($args['where']) && !empty($args['where'])) {
